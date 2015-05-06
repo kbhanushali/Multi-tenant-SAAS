@@ -61,12 +61,10 @@ console.log(__dirname);
 if ('development' == app.get('env')) {
   app.use(errorHandler());
 }
-app.get('/', routes.index);
-//app.get('/', datasource.fetch_data);
+//app.get('/', routes.index);
+app.get('/', datasource.fetch_data);
 app.post('/signin',routes.signin);
 app.get('/users', user.list);
-
-
 
 
 app.get('/createProject', project.createProject);
@@ -74,6 +72,7 @@ app.get('/selectProjectType', project.selectProjectType);
 
 //app.get('/addWaterfallProject', project.addWaterfallProject);
 app.post('/addActivity', project.addActivity);
+app.post('/updateActivity',project.updateActivity)
 app.get('/afterAddTask', project.afterAddTask);
 //app.get('/afterAddWaterfallProject', project.afterAddWaterfallProject);
 app.get('/afterAddProject', project.afterAddProject);

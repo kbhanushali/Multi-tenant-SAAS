@@ -21,94 +21,42 @@ exports.fetch_data = function(req,res){
 	var pt = 'kanban';
 	var pn = 'demo';
 	
-	var projectId = 1;
+	var projectId = 152;
 	var taskField = {name:"task name",};
-	var taskData = {};
-	//create_task()
-	create_project(1,pt,pn,function(err,result){});
+	var taskData = {Description:"kachra",activityid:"a"};
+	var newTaskData = {"Description":"kachra","activityid":"a","Stage":"demoa"};
+	var oldTaskData = {"Description" : "asd","activityid" : "a","Stage" : "a","Owner Name" : "a","Card Name" : "a","Project Name" : "a"};
+	var projectType = 3;
 	
-//	pool.getConnection(function(err, connection) {
-//		if(err){
-//			console.log('error');
-//			console.log(err);
-//		}
-//		connection.query('SELECT * FROM tenant WHERE tenantid = ? limit 1',[1],function(err, tenantdata){
-//			connection.release();
-//			if(tenantdata.length > 0){
-//				console.log(tenantdata);
-//				testmongo.find().toArray(function (err, items) {
-//					if(err){
-//						console.log(err.toString());
-//					}
-//				      console.log('mongdb: ', items);
-//				      res.json(items);
-//				    });
-//				//user logged in
-////				var userObject = user[0];
-////				var current_time = new Date();
-////
-////				//current time
-////				var newData = {
-////						last_login:current_time
-////				};
-////				
-////				//add last_login time to user object and update the database
-////				edit_user_profile(userObject.membershipNo, newData, function(err, result){
-////					
-////				});
-//			}
-//			//callback(err, user);
-//		});
-//	});
+	//create_task()
+	//create_project(1,pt,pn,function(err,result){});
+	//create_task(152,taskData,function(err,result){console.log('result '+result)});
+	update_task(projectId, projectType, oldTaskData, newTaskData, function(err,result){});
 	
 	
 };
-
-//
-//function create_task(projectId,taskField,taskData,callback){
-//	
-//	pool.getConnection(function(err, connection) {
-//		if(err){
-//			console.log(err);
-//		}
-//		connection.query('INSERT INTO tenant_schema SET ?',[taskField],function(err, result2){
-//			if(err)
-//				console.log(err);
-//			
-//			mongoconn.findOne({projectid:projectId},function(err,result){
-//				console.log(result);
-//				
-//			});
-//			mongoconn.update(projectData,function (err, result) {
-//				if(err){
-//					console.log(err.toString());
-//				}
-////				check for true in result for success
-//				callback(err,'true');
-//		    });
-//			
-//		});
-//	});
-//}
-
-
 
 
 
 
 function create_task(projectId,taskData,callback){
-//	var jsonResult;
+
 
 			
 			mongoconn.findOne({projectid:projectId},function(err,result){
 				console.log(result);
-//				jsonResult = result;
-			    var ret = merge_options(result,taskData);
-//			    console.log('id '+ret["_id"]);
-				console.log(util.inspect(ret, {showHidden: false, depth: null}));
-//				var id = {_id:"\""+ret["_id"]+"\""};
-//				console.log(util.inspect(id, {showHidden: false, depth: null}));
-				mongoconn.update({projectid:projectId},ret,function (err, result) {
+			    
+				if(!result.activity){
+					result = merge_options(result,taskData);
+					
+				}
+				else
+				{
+					result.activity.push(taskData);
+					console.log(util.inspect(result, {showHidden: false, depth: null}));
+				}
+				
+				mongoconn.update({projectid:projectId},result,function (err, result) {
 					if(err){
 						console.log(err.toString());
 					}
@@ -117,8 +65,7 @@ function create_task(projectId,taskData,callback){
 					callback(err,'true');
 			    });
 			});
-			
-			
+						
 }
 
 
@@ -131,20 +78,18 @@ function merge_options(obj1,obj2){
 }
 
 
-function update_task(projectId, oldTaskData, newTaskData, callback) {
+function update_task(projectId, projectType, oldTaskData, newTaskData, callback) {
 
 	console.log('task name ' + oldTaskData["task name"]);
-	mongoconn.update({
-		projectid : projectId,
-		"task" : {
-			"$elemMatch" : {
-				"task name" : oldTaskData["task name"]
-			}
-		}
-	}, {
-		$set : {
-			"task.$" : newTaskData
-		}
+	if(projectType == 1)
+		var query = "{projectid :"+projectId+",\"activity\" : {\"$elemMatch\" : {\"Task Name\" : "+oldTaskData["Task Name"]+"}}}";
+	else if(projectType == 2)
+		var query = "{projectid :"+projectId+",\"activity\" : {\"$elemMatch\" : {\"Story Name\" : "+oldTaskData["Story Name"]+"}}}";
+	else if(projectType == 3)
+		var query = "{projectid :"+projectId+",\"activity\" : {\"$elemMatch\" : {\"Card Name\" : "+oldTaskData["Card Name"]+"}}}";
+	
+	console.log('query '+query);
+	mongoconn.update(query, {$set : {"activity.$" : newTaskData}
 	}, function(err, result) {
 		if (err) {
 			console.log(err.toString());
@@ -155,6 +100,19 @@ function update_task(projectId, oldTaskData, newTaskData, callback) {
 		callback(err, 'true');
 	});
 
+}
+
+function fetch_activity(projectId,callback){
+	
+	var activity;
+	mongoconn.findOne({projectid:projectId},function(err,result){
+		if(err)
+			console.log('inside fetch activity error');
+
+		console.log('inside fetch activity');
+		callback(err,result);	
+		
+	});
 }
 
 
@@ -203,10 +161,11 @@ function getAllProjects(tenantId,callback){
 				if(err){
 					console.log('error 1 '+err);
 				}
-			
+				
+				console.log(result1.length);
 				resultNew = result1;
 				callback(err,resultNew);
-				console.log("****************  " + resultNew);
+				
 		});
 			 
 	});
@@ -336,3 +295,4 @@ exports.delete_project = delete_project;
 exports.update_task = update_task;
 exports.update_story = update_story;
 exports.update_card = update_card;
+exports.fetch_activity = fetch_activity;

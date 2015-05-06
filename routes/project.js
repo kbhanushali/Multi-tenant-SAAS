@@ -256,9 +256,21 @@ exports.afterAddTask = function(req, res) {
 	console.log(taskData);
 	var json = JSON.parse(taskData);
     datasource.create_task(projectid,json,function(err,result){});
-	res.render('success');
+    res.render('project',{tenantType:tenantType,projectName:projectName});
 };
 
+exports.updateActivity = function(req,res){
+	
+	console.log('inside update activity');
+	datasource.fetch_activity(projectid,function(err,result){
+		if(err)
+			console.log('inside error update activtiy');
+		
+		console.log('inside update activity');
+		res.render('updateStory',{results:result});
+		
+	});
+}
 
 
 
