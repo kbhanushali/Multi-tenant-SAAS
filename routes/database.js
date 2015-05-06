@@ -98,13 +98,7 @@ exports.fetch_data = function(req,res){
 
 function create_task(projectId,taskField,taskData,callback){
 //	var jsonResult;
-	pool.getConnection(function(err, connection) {
-		if(err){
-			console.log(err);
-		}
-		connection.query('INSERT INTO tenant_schema (projectid,fieldname,fieldtype) VALUES ?',[taskField],function(err, result2){
-			if(err)
-				console.log('error 11 '+err);
+
 			
 			mongoconn.findOne({projectid:projectId},function(err,result){
 				console.log(result);
@@ -125,8 +119,6 @@ function create_task(projectId,taskField,taskData,callback){
 			});
 			
 			
-		});
-	});
 }
 
 
@@ -231,8 +223,8 @@ exports.fetch_task =function(projectId,tenantType,callback){
 			console.log(err);
 		}
 		console.log(projectId+' '+tenantType);
-		projectId= 82;
-		tenantType= 1;
+		//projectId= 82;
+		//tenantType= 1;
 		var query='SELECT fieldname FROM ref_schema WHERE tenantType = ? UNION SELECT fieldname FROM tenant_schema WHERE projectid = ?';
 		//	 connection.query(query,[tenantType, projectId],function(err, result1){
 				 connection.query(' SELECT fieldname FROM ref_schema WHERE tenantType = ? UNION SELECT fieldname FROM tenant_schema WHERE projectid = ?',[tenantType,projectId],function(err, result1){
@@ -279,9 +271,9 @@ function create_project(tenantId,projectType,projectName,callback){
 				pid = result1[result1.length-1].projectid;
 				console.log(pid);
 				var tenantData = {projectid:pid, fieldname:'Project Name',fieldtype:'string'};
-				projectID = pid;
+				//projectID = pid;
 				projectData = {projectid:pid,projectname:projectName};				
-				console.log("**************  " + projectID);
+				//console.log("**************  " + projectID);
 
 				//insert into tenant_schema table
 				
@@ -296,7 +288,7 @@ function create_project(tenantId,projectType,projectName,callback){
 							console.log(err.toString());
 						}
 //						check for true in result for success
-						callback(err,projectID);
+						callback(err,pid);
 				    });
 					
 			});

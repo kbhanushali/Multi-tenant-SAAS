@@ -1,44 +1,13 @@
+
 var datasource = require('./database');
 var projectid;
 var tenantType;
 var tenantid = 1;
 var projectType;
+var projectName;
+var workDataField;
 
-exports.addWaterfallProject = function(req, res) {
-	res.render('addWaterfallProject');
-};
 
-exports.addActivity = function(req, res) {
-	console.log('********************' + projectid);
-	var id = projectid;
-	console.log(tenantType + ' ' + projectid);
-	datasource.fetch_task(id, tenantType, function(err, result) {
-	});
-	res.render('addTask');
-};
-
-exports.afterAddTask = function(req, res) {
-	var id = projectid;
-	var taskField = [ [ projectid, 'task name', 'string' ],
-			[ projectid, 'description', 'string' ],
-			[ projectid, 'duration', 'int' ],
-			[ projectid, 'due date', 'date' ],
-			[ projectid, 'work done', 'int' ],
-			[ projectid, 'resource name', 'string' ] ];
-	var taskData = {
-		"task" : [ {
-			"task name" : req.param("name"),
-			"description" : req.param("desc"),
-			"duration" : req.param("duration"),
-			"due date" : req.param("dueDate"),
-			"work done" : req.param("workDone"),
-			"resource name" : req.param("resourceName")
-		} ]
-	};
-	datasource.create_task(id, taskField, taskData, function(err, result) {
-	});
-	res.render('success');
-};
 
 exports.afterAddCard = function(req, res) {
 	var id = projectid;
@@ -84,23 +53,11 @@ exports.afterAddStory = function(req, res) {
 	res.render('success');
 };
 
-//exports.afterAddWaterfallProject = function(req, res) {
-//	console.log(tenantType + ' in afterAddWaterfallProject');
-//	if(tenantType ==1)
-//		
-//	datasource.create_project(tenantid, 'waterfall', req.param("name"),
-//			function(err, result) {
-//
-//				projectid = result;
-//				console.log(projectid + ' in afterAddWaterfallProject');
-//
-//			});
-//	res.render('waterfallProject');
-//};
 
 exports.afterAddProject = function(req, res) {
 	console.log(tenantType + ' in afterAddProject');
-	if(tenantType ==1)
+	projectName = req.param("name");
+	//if(tenantType ==1)
 		
 	datasource.create_project(tenantid, projectType, req.param("name"),
 			function(err, result) {
@@ -109,29 +66,11 @@ exports.afterAddProject = function(req, res) {
 				console.log(projectid + ' in afterAddProject');
 
 			});
-	res.render('project',{tenantType:tenantType});
+	res.render('project',{tenantType:tenantType,projectName:projectName});
 	
 };
 
-//exports.afterAddKanbanProject = function(req, res) {
-//	datasource.create_project(tenantid, 'kanban', req.param("name"), function(
-//			err, result) {
-//
-//		projectid = result;
-//
-//	});
-//	res.render('afterAddKanbanProject');
-//};
 
-//exports.afterAddScrumProject = function(req, res) {
-//	datasource.create_project(tenantid, 'scrum', req.param("name"), function(
-//			err, result) {
-//
-//		projectid = result;
-//
-//	});
-//	res.render('afterAddScrumProject');
-//};
 
 exports.updateTask = function(req, res) {
 	res.render('updateTask');
@@ -215,9 +154,6 @@ exports.deleteProjectWaterfall = function(req, res) {
 	res.render('deleteProject');
 };
 
-// exports.addKanbanProject = function(req, res) {
-// res.render('addKanbanProject');
-// };
 
 exports.addCard = function(req, res) {
 	res.render('addCard');
@@ -260,20 +196,16 @@ exports.updateStory = function(req, res) {
 
 exports.selectProjectType = function(req, res) {
 	 projectType = req.param("name");
-	// System.out.println("************"+projectType);
-	// console.log("*************" + projectType);
+	
 	if (projectType == "Waterfall") {
 		tenantType = 1;
 		console.log(tenantType + 'in waterfall');
-		//res.render('addWaterfallProject');
 	} else if (projectType == "Scrum") {
 		tenantType = 2;
 		console.log(tenantType + 'in Scrum');
-//		res.render('addScrumProject');
 	} else {
 		tenantType = 3;
 		console.log(tenantType + 'in kanban');
-//		res.render('addKanbanProject');
 	}
 	res.render('addProject',{tenantType:tenantType});
 };
@@ -295,3 +227,37 @@ exports.myProjects = function(req, res) {
 exports.getProjectDetails = function(req, res) {
 
 };
+
+
+
+exports.addActivity = function(req, res) {
+	console.log('********************'+projectid);
+	var id= projectid;
+	console.log(tenantType+ ' '+projectid);
+	datasource.fetch_task(id,tenantType,function(err,result){
+		if(err)
+		console.log('error in ')
+		
+		workDataField = result;
+	res.render('addTask',{results:result});
+	});
+};
+
+exports.afterAddTask = function(req, res) {
+
+	var taskData = "{\"activity\":[{";
+	for(var i in workDataField){
+		taskData = taskData + "\""+workDataField[i]+":"+req.param("workDataField[i]")+",";
+	}
+	taskData = taskData + "}]}";
+	console.log(taskData);
+	var json = JSON.parse(taskData);
+	console.log(json);
+	// "task name":req.param("name") , "description":req.param("desc") , "duration":req.param("duration")  , "due date":req.param("dueDate") , "work done":req.param("workDone") , "resource name":req.param("resourceName") }]};
+	// datasource.create_task(id,taskData,function(err,result){});
+	res.render('success');
+};
+
+
+
+

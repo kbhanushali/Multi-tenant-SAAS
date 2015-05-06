@@ -92,7 +92,7 @@ app.post('/deleteCard', project.deleteCard);
 app.post('/deleteProjectKanban', project.deleteProjectKanban);
 
 
-app.get('/afterAddScrumProject', project.afterAddScrumProject);
+//app.get('/afterAddScrumProject', project.afterAddScrumProject);
 app.post('/addStory', project.addStory);
 app.get('/afterAddStory', project.afterAddStory);
 app.post('/updateStory', project.updateStory);

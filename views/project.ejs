@@ -43,15 +43,15 @@
     <div class="container">
 
       <form class="form-signin">
-        <h2 class="form-signin-heading">Project  XYZ </h2>
+        <h2 class="form-signin-heading">Project <%=projectName%></h2>
 		</br>
 		</br>
 		<%if(tenantType == 1){%>
-		 	<button class="btn btn-large btn-primary" type="submit" formmethod="post" formaction="/addActivty">Add Story to Project</button>
+		 	<button class="btn btn-large btn-primary" type="submit" formmethod="post" formaction="/addActivity">Add task</button>
 		 <%} else if(tenantType ==2){%>
-         	<button class="btn btn-large btn-primary" type="submit" formmethod="post" formaction="/updateActivity">Update Story </button>
+         	<button class="btn btn-large btn-primary" type="submit" formmethod="post" formaction="/addActivity">Add Story</button>
 		 <%}else{%>
-		  	<button class="btn btn-large btn-primary" type="submit" formmethod="post" formaction="/updateActivity">Update Card </button>
+		  	<button class="btn btn-large btn-primary" type="submit" formmethod="post" formaction="/addActivity">Add Card</button>
 		 <%}%>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
