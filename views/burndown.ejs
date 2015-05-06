@@ -1,0 +1,45 @@
+<html>
+<head>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+    google.load('visualization', '1.1', {packages: ['line']});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Day');
+      data.addColumn('number', 'Actual');
+      data.addColumn('number', 'Ideal');
+
+      data.addRows([
+        ['9/11',  37.8, 80.8],
+        ['9/24',  30.9, 69.5],
+        ['10/3',  25.4,   57],
+        ['10/10',  11.7, 50],
+        ['10/17',  11.9, 40.6],
+        ['10/24',   8.8, 33.6],
+        ['10/30',   7.6, 22.3],
+        ['11/7',  12.3, 10.2],
+        ['11/14',  16.9, 0.9]
+       ]);
+
+      var options = {
+        chart: {
+          title: 'Box Office Earnings in First Two Weeks of Opening',
+          subtitle: 'in millions of dollars (USD)'
+        },
+        width: 900,
+        height: 500
+      };
+
+      var chart = new google.charts.Line(document.getElementById('linechart_material'));
+
+      chart.draw(data, options);
+    }
+  </script>
+</head>
+<body>
+  <div id="linechart_material"></div>
+</body>
+</html>
