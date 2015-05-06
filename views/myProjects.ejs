@@ -37,11 +37,70 @@
         padding: 7px 9px;
         width : 300px;
       }
+      nav {
+    position: fixed;
+    width: auto;
+    background-color: lightgrey;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-left: 70px;
+    margin-right: 70px;
+    margin-top: 20px;
+}
+
+a {
+    margin: 0 10px 0 10px;
+    text-decoration: none;
+    color: black;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.section {
+    height: 100%;
+    padding-top: 20px;
+}
 
     </style>
     <link rel='stylesheet' href='/bootstrap/css/bootstrap-responsive.css' />
   </head>
+  <meta charset="UTF-8">
+<title>Super Awesome</title>
+
+<!-- CSS (load bootstrap from a CDN) -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<style>
+body { padding-top:50px; }
+</style>
+
+<nav class="navbar navbar-default" role="navigation">
+<div class="container-fluid">
+
+<div class="navbar-header">
+<a class="navbar-brand" href="#">
+<span class="glyphicon glyphicon glyphicon-tree-deciduous"></span>
+<b> HOME <b>
+</a>
+</div>
+
+<ul class="navbar-brand">
+<li><a href="/createProject">New Project</a></li>
+</ul>
+
+</div>
+</nav>
+
+  
   <body>
+
     <div class="container">
 
       <form class="form-signin">
@@ -51,18 +110,75 @@
        
        
        <br>
-      
-      <% for(var i=0; i<results.length; i++) {%>
+       
+<!--        <nav> -->
+<!--     <a class="nav" id="1" href="#">Section 1</a> -->
+<!--     <a class="nav" id="2" href="#">Section 2</a> -->
+<!--     <a class="nav" id="3" href="#">Section 3</a> -->
+<!-- </nav> -->
+<!-- <div class="section" id="1"> -->
+<!-- section 1       </div> -->
+
+              <h3 class="form-signin-heading">Waterfall Projects</h3>
+      <% for(var i=0, j=0; i< results.length;i++){
+      			if(results[i].type = "waterfall"){%>
                     
                          <button class="btn btn-large btn-primary" type="submit" formaction="/getProjectDetails">  <%= results[i].projectid %> <tb> ( <%= results[i].type %> )</button>
-			 		
-                       
-                       
-                       <br>
-                       <br>
-                   
-                     <% } %>
-      
+			 		          <% 
+			 		           if(j >= 5){%>
+			 		           	<br>
+                       			<br>
+                       			
+                       <%}
+                                              		 j = (j+1)%6; 
+                       }}
+			 		           %>
+			 		                       
+                                         
+                     </br>
+       
+       
+       <br>
+<!--        <div class="section" id="2"> -->
+<!--     Section 2       </div> -->
+    
+              <h3 class="form-signin-heading">Scrum Projects</h3>
+      <% for(var i=0, j=0; i< results.length;i++){
+      if(results[i].type = "scrum"){%>
+                    
+                         <button class="btn btn-large btn-primary" type="submit" formaction="/getProjectDetails">  <%= results[i].projectid %> <tb> ( <%= results[i].type %> )</button>
+			 		<% 
+			 		           if(j >= 5){%>
+			 		           	<br>
+                       			<br>
+                       			
+                       <%}
+                                              		 j = (j+1)%6; 
+                       }}
+			 		           %>
+       </br>
+       
+       
+       <br>
+       
+       
+<!--        <div class="section" id="3"> -->
+<!--     Section 3       </div> -->
+    
+              <h3 class="form-signin-heading">Kanban Projects</h3>
+      <% for(var i=0, j=0; i< results.length;i++){
+      if(results[i].type = "kanban"){%>
+                    
+                         <button class="btn btn-large btn-primary" type="submit" formaction="/getProjectDetails">  <%= results[i].projectid %> <tb> ( <%= results[i].type %> )</button>
+			 		<% 
+			 		           if(j >= 5){%>
+			 		           	<br>
+                       			<br>
+                       			
+                       <%}
+                                              		 j = (j+1)%6; 
+                       }}
+			 		           %>                           
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         
@@ -70,6 +186,9 @@
       </form>
 
     </div>
+    
         <script src="/public/bootstrap/js/bootstarp.js"></script>
+        
+});
   </body>
 </html>
