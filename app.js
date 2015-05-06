@@ -72,17 +72,18 @@ app.get('/users', user.list);
 app.get('/createProject', project.createProject);
 app.get('/selectProjectType', project.selectProjectType);
 
-app.get('/addWaterfallProject', project.addWaterfallProject);
-app.post('/addTask', project.addWork);
+//app.get('/addWaterfallProject', project.addWaterfallProject);
+app.post('/addActivity', project.addActivity);
 app.get('/afterAddTask', project.afterAddTask);
-app.get('/afterAddWaterfallProject', project.afterAddWaterfallProject);
+//app.get('/afterAddWaterfallProject', project.afterAddWaterfallProject);
+app.get('/afterAddProject', project.afterAddProject);
 app.post('/updateTask', project.updateTask);
 app.get('/afterUpdateTask', project.afterUpdateTask);
 app.post('/deleteTask', project.deleteTask);
 app.post('/deleteProjectWaterfall', project.deleteProjectWaterfall);
-app.get('/afterAddKanbanProject', project.afterAddKanbanProject);
+//app.get('/afterAddKanbanProject', project.afterAddKanbanProject);
 
-app.get('/addKanbanProject', project.addKanbanProject);
+//app.get('/addKanbanProject', project.addKanbanProject);
 app.post('/addCard', project.addCard);
 app.get('/afterAddCard', project.afterAddCard);
 app.post('/updateCard', project.updateCard);

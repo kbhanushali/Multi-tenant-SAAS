@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Team#1</title>
+    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+
+      .form-signin {
+        width: auto;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+        width : 300px;
+      }
+
+    </style>
+    <link rel='stylesheet' href='/bootstrap/css/bootstrap-responsive.css' />
+  </head>
+  <body>
+    <div class="container">
+
+      <form class="form-signin">
+        <h2 class="form-signin-heading">Project  XYZ </h2>
+		</br>
+		</br>
+		<%if(tenantType == 1){%>
+		 	<button class="btn btn-large btn-primary" type="submit" formmethod="post" formaction="/addActivty">Add Story to Project</button>
+		 <%} else if(tenantType ==2){%>
+         	<button class="btn btn-large btn-primary" type="submit" formmethod="post" formaction="/updateActivity">Update Story </button>
+		 <%}else{%>
+		  	<button class="btn btn-large btn-primary" type="submit" formmethod="post" formaction="/updateActivity">Update Card </button>
+		 <%}%>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        
+        </br>
+		</br> 
+	      <%if(tenantType == 1){%>
+	       <button class="btn btn-large btn-primary" type="submit" formmethod="post" formaction="/updateActivity">Update Task </button>
+          <%}else if(tenantType == 2){%>
+           <button class="btn btn-large btn-primary" type="submit" formmethod="post" formaction="/updateActivity">Update Story </button>
+          <%}else{%>
+            <button class="btn btn-large btn-primary" type="submit" formmethod="post" formaction="/updateActivity">Update Card </button>
+          <%}%>
+                     
+              
+       
+       </br>
+	   </br> 
+	      <%if(tenantType == 1){%>
+	       	<button class="btn btn-large btn-primary" type="submit" formmethod="post" formaction="/deleteActivity">Delete Task </button>
+       	  <%}else if(tenantType == 2){%>
+       	    <button class="btn btn-large btn-primary" type="submit" formmethod="post" formaction="/deleteActivity">Delete Story </button>
+          <%}else{%>
+             <button class="btn btn-large btn-primary" type="submit" formmethod="post" formaction="/deleteActivity">Delete Card </button>
+          <%}%>
+       </br>
+	   </br> 
+	      <%if(tenantType == 1){%>
+	       <button class="btn btn-large btn-primary" type="submit" formmethod="post" formaction="/deleteProject">Delete Waterfall Project </button>
+          <%}else if(tenantType == 2){%>
+       	    <button class="btn btn-large btn-primary" type="submit" formmethod="post" formaction="/deleteProject">Delete Scrum Project </button>
+          <%}else{%>
+       	    <button class="btn btn-large btn-primary" type="submit" formmethod="post" formaction="/deleteProject">Delete Kanban Project </button>
+           <%}%>
+        
+      </form>
+
+    </div>
+        <script src="/public/bootstrap/js/bootstarp.js"></script>
+  </body>
+</html>

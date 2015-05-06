@@ -43,11 +43,19 @@
     <div class="container">
 
       <form class="form-signin">
+      
+      <%if(tenantType == 1) {%>
         <h2 class="form-signin-heading">Add Waterfall Project</h2>
+      <% }else if(tenantType == "2"){%>
+        <h2 class="form-signin-heading">Add Scrum Project</h2>
+       <%}else{%>
+        <h2 class="form-signin-heading">Add Kanban Project</h2>
+       <%}%>
+       
         <input type="text" class="input-block-level" name="name" id = "name" placeholder="Name Of Project">
 		</br>
 		</br>
-		<button class="btn btn-large btn-primary" type="submit" formaction="/afterAddWaterfallProject">Add Project</button>
+		<button class="btn btn-large btn-primary" type="submit" formaction="/afterAddProject">Add Project</button>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         
