@@ -246,15 +246,16 @@ exports.addActivity = function(req, res) {
 exports.afterAddTask = function(req, res) {
 
 	var taskData = "{\"activity\":[{";
+	var data;
 	for(var i in workDataField){
-		taskData = taskData + "\""+workDataField[i]+":"+req.param("workDataField[i]")+",";
+		data = workDataField[i].fieldname;
+		taskData = taskData + "\""+data+"\":\""+req.param(data)+"\",";
 	}
+	taskData = taskData.slice(0, taskData.length-1)
 	taskData = taskData + "}]}";
 	console.log(taskData);
 	var json = JSON.parse(taskData);
-	console.log(json);
-	// "task name":req.param("name") , "description":req.param("desc") , "duration":req.param("duration")  , "due date":req.param("dueDate") , "work done":req.param("workDone") , "resource name":req.param("resourceName") }]};
-	// datasource.create_task(id,taskData,function(err,result){});
+    datasource.create_task(projectid,json,function(err,result){});
 	res.render('success');
 };
 

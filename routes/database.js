@@ -96,7 +96,7 @@ exports.fetch_data = function(req,res){
 
 
 
-function create_task(projectId,taskField,taskData,callback){
+function create_task(projectId,taskData,callback){
 //	var jsonResult;
 
 			
