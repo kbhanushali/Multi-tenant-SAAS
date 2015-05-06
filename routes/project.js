@@ -1,5 +1,6 @@
 var datasource = require('./database');
 var projectid;
+var tenantType;
 
 
 
@@ -7,7 +8,11 @@ exports.addWaterfallProject = function(req, res) {
 	res.render('addWaterfallProject');
 };
 
-exports.addTask = function(req, res) {
+exports.addWork = function(req, res) {
+	console.log('********************'+projectid);
+	var id= projectid;
+	console.log(tenantType+ ' '+projectid);
+	datasource.fetch_task(id,tenantType,function(err,result){});
 	res.render('addTask');
 };
 
@@ -42,11 +47,11 @@ exports.afterAddStory = function(req, res) {
 
 
 exports.afterAddWaterfallProject = function(req, res) {
-	
+	console.log(tenantType+' in afterAddWaterfallProject');
 	 datasource.create_project(1,'waterfall',req.param("name"),function(err,result){
 		
 		 projectid= result;
-		 
+		 console.log(projectid+' in afterAddWaterfallProject');
 		
 	});
 	res.render('waterfallProject');
@@ -195,12 +200,22 @@ exports.selectProjectType = function(req, res) {
 	var projectType =req.param("name");
 	 //System.out.println("************"+projectType);
 	//console.log("*************" + projectType);
-	if(projectType == "Waterfall")
+	if(projectType == "Waterfall"){
+	tenantType = 1;	
+	console.log(tenantType+'in waterfall' );
 	res.render('addWaterfallProject');
-	else if (projectType == "Scrum")
+	
+	}
+	else if (projectType == "Scrum"){
+		tenantType = 2;
+		console.log(tenantType+'in waterfall' );
 		res.render('addScrumProject');
-	else
+		}
+	else{
+		tenantType = 3;
+		console.log(tenantType+'in waterfall' );
 		res.render('addKanbanProject');
+		}
 };
 
 

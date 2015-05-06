@@ -9,7 +9,14 @@ exports.index = function(req, res) {
 	});
 };
 
+
+
 exports.signin = function(req, res) {
 	console.log(req.body.email);
 	console.log(req.body.password);
 }
+
+
+
+
+

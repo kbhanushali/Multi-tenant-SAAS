@@ -73,7 +73,7 @@ app.get('/createProject', project.createProject);
 app.get('/selectProjectType', project.selectProjectType);
 
 app.get('/addWaterfallProject', project.addWaterfallProject);
-app.post('/addTask', project.addTask);
+app.post('/addTask', project.addWork);
 app.get('/afterAddTask', project.afterAddTask);
 app.get('/afterAddWaterfallProject', project.afterAddWaterfallProject);
 app.post('/updateTask', project.updateTask);

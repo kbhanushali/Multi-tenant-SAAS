@@ -222,10 +222,41 @@ function getAllProjects(tenantId,callback){
 }
 
 
+
+exports.fetch_task =function(projectId,tenantType,callback){
+	
+	var resultNew ;
+		pool.getConnection(function(err, connection) {
+		if(err){
+			console.log(err);
+		}
+		console.log(projectId+' '+tenantType);
+		projectId= 82;
+		tenantType= 1;
+		var query='SELECT fieldname FROM ref_schema WHERE tenantType = ? UNION SELECT fieldname FROM tenant_schema WHERE projectid = ?';
+		//	 connection.query(query,[tenantType, projectId],function(err, result1){
+				 connection.query(' SELECT fieldname FROM ref_schema WHERE tenantType = ? UNION SELECT fieldname FROM tenant_schema WHERE projectid = ?',[tenantType,projectId],function(err, result1){
+		if(err){
+					console.log('error 1 '+err);
+				}
+			
+				resultNew = result1;
+				console.log("****************  " + util.inspect(resultNew, {showHidden: false, depth: null}));
+
+				callback(err,resultNew);
+		});
+			 
+	});
+		
+}
+
+
 function create_project(tenantId,projectType,projectName,callback){
 	var projectID;
 	var tenantData={tenant_id:tenantId,type:projectType};
 	var projectData;
+	console.log(tenantId+ ' '+projectType,' '+projectName+'in create_project');
+
 		pool.getConnection(function(err, connection) {
 		if(err){
 			console.log(err);
@@ -243,14 +274,17 @@ function create_project(tenantId,projectType,projectName,callback){
 					console.log('error 1 '+err);
 				}
 				
-			//	console.log("**************  " + projectID);
+				console.log("**************  " + projectID);
 				console.log("fetch result "+result1.length);
 				pid = result1[result1.length-1].projectid;
 				console.log(pid);
-				var tenantData = {projectid:pid, fieldname:'project name',fieldtype:'string'};
+				var tenantData = {projectid:pid, fieldname:'Project Name',fieldtype:'string'};
 				projectID = pid;
-				projectData = {projectid:pid,projectname:projectName};
+				projectData = {projectid:pid,projectname:projectName};				
+				console.log("**************  " + projectID);
+
 				//insert into tenant_schema table
+				
 				connection.query('INSERT INTO tenant_schema SET ?',[tenantData],function(err, result2){
 					if(err){
 						console.log('error 2'+err);
