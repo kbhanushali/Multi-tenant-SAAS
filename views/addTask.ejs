@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--DOCTYPE html-->
 <html>
   <head>
     <title>Team#1</title>
@@ -46,12 +46,15 @@
 
       <form class="form-signin">
         <h2 class="form-signin-heading">Add Task</h2>
-        
         </br>
-        Name:<br>
-        <input type="text" class="input-block-level" name="name" >
+
+<%for(var i in results){%>
+  <%if(results[i]!="activityid"){%>
+  <%=results[i].fieldname%>:<br>
+  <input type="text" class="input-block-level" name="<%=results[i].fieldname%>" >
 		 </br>
-		Description:<br>
+	<%	 }}%>
+		<!--Description:<br>
         <input type="text" class="input-block-level" name="desc" >
 		 </br>		 
         Duration (in Hours) :<br>
@@ -64,7 +67,7 @@
         <input type="text" class="input-block-level" name="workDone" >
 		</br>
         Resource Name:<br>
-        <input type="text" class="input-block-level" name="resourceName" >
+        <input type="text" class="input-block-level" name="resourceName" >-->
 		 
         </br>
         </br>

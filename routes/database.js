@@ -98,13 +98,7 @@ exports.fetch_data = function(req,res){
 
 function create_task(projectId,taskField,taskData,callback){
 //	var jsonResult;
-	pool.getConnection(function(err, connection) {
-		if(err){
-			console.log(err);
-		}
-		connection.query('INSERT INTO tenant_schema (projectid,fieldname,fieldtype) VALUES ?',[taskField],function(err, result2){
-			if(err)
-				console.log('error 11 '+err);
+
 			
 			mongoconn.findOne({projectid:projectId},function(err,result){
 				console.log(result);
@@ -125,8 +119,6 @@ function create_task(projectId,taskField,taskData,callback){
 			});
 			
 			
-		});
-	});
 }
 
 

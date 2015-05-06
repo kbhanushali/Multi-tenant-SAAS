@@ -1,7 +1,7 @@
 var datasource = require('./database');
 var projectid;
 var tenantType;
-
+var workDataField;
 
 
 exports.addWaterfallProject = function(req, res) {
@@ -12,15 +12,27 @@ exports.addWork = function(req, res) {
 	console.log('********************'+projectid);
 	var id= projectid;
 	console.log(tenantType+ ' '+projectid);
-	datasource.fetch_task(id,tenantType,function(err,result){});
-	res.render('addTask');
+	datasource.fetch_task(id,tenantType,function(err,result){
+		if(err)
+		console.log('error in ')
+		
+		workDataField = result;
+	res.render('addTask',{results:result});
+	});
 };
 
 exports.afterAddTask = function(req, res) {
-	var id = projectid;
-	var taskField = [[projectid,'task name','string'],[projectid,'description','string'] , [projectid,'duration','int'] , [projectid,'due date','date'] , [projectid,'work done','int'] , [projectid,'resource name','string']];
-	var taskData = {"task":[{ "task name":req.param("name") , "description":req.param("desc") , "duration":req.param("duration")  , "due date":req.param("dueDate") , "work done":req.param("workDone") , "resource name":req.param("resourceName") }]};
-	datasource.create_task(id,taskField,taskData,function(err,result){});
+
+	var taskData = "{\"activity\":[{";
+	for(var i in workDataField){
+		taskData = taskData + "\""+workDataField[i]+":"+req.param("workDataField[i]")+",";
+	}
+	taskData = taskData + "}]}";
+	console.log(taskData);
+	var json = JSON.parse(taskData);
+	console.log(json);
+	// "task name":req.param("name") , "description":req.param("desc") , "duration":req.param("duration")  , "due date":req.param("dueDate") , "work done":req.param("workDone") , "resource name":req.param("resourceName") }]};
+	// datasource.create_task(id,taskData,function(err,result){});
 	res.render('success');
 };
 
